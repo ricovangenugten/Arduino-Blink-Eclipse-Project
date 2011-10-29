@@ -48,14 +48,14 @@ Credit for all of this tutorial goes to https://github.com/ricovangenugten
 ## Using the Serial Library
 
 If you try to use the built in Serial object in Eclipse and you get an error saying that it hasn't been defined then you need to add the following snipped. For some reason this command is not executed where it should be in the "HardwareSerial.h".
-"""
+```c
 extern HardwareSerial Serial;
-"""
+```
 
 You can either place it in the "arduino.h" file or at the top of your main.cpp. For the Ardiuno Mega which has three different Serial functions, use the same code except use "Serial1" instead, ie. 
 
-"""
+```c
 extern HardwareSerial Serial1;
 extern HardwareSerial Serial2;
 extern HardwareSerial Serial3;
-"""
+```
