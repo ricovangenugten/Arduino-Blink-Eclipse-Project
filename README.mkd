@@ -1,0 +1,61 @@
+This is an installation manual for the Arduino Blink example implemented in an Eclipse project to be used as a starting point for your own project. It contains the Arduino Core Library and is therefore completely self contained, the Arduino IDE is not needed. All command line options are configured so that they are as similar to the Arduino IDE as possible creating equally small binaries. This is perfectly suitable for people that are comfortable to writing C/C++ and find the Arduino IDE too limited.
+
+# Installation steps:
+
+### On windows: 
+ - install the usb-driver for your arduino, see http://arduino.cc/en/Guide/Windows#toc4
+ - Install avr-gcc
+ - Install WinAVR from http://sourceforge.net/projects/winavr/files
+ - copy avrdude.exe (arduino-xxxx\hardware\tools\avr\bin) and avrdude.conf (arduino-xxxx\hardware\tools\avr\etc) from the arduino application to winavr (WinAVR-xx/bin)
+
+### Not Windows
+  - Mac OSX: Install CrossPack AVR from http://www.obdev.at/crosspack/
+  - Linux: apt-get install avrdude binutils-avr gcc-avr avr-libc gdb-avr
+
+### All Operating Systems
+ - Install Eclipse for C/C++ developers
+
+ *Install Eclipse AVR plugin*
+  - Go to Help -> Install New Software
+  - At Work with: fill in http://avr-eclipse.sourceforge.net/updatesite/, click Add
+  - Check AVR Eclipse Plugin, click next and finish the installation
+
+ *Import GIT repository*
+  - Go to File -> Import -> Git -> Projects from Git
+  - Click Clone
+  - At URI: fill in https://github.com/allgood38/Arduino-Blink-Eclipse-Project.git
+  - Click next, select all branches and finish the wizard
+  - Check Import Existing Projects and finish the wizard
+
+ *Build Arduino Core Library*
+  - Right click on the project and go to Project Properties
+  - Go to AVR -> AVRDude and click New
+  - Select the right programmer hardware (stk500v2 for the Arduino Mega 2560, else arduino)
+  - Specify the right port (On windows: COMx, see Device Manager. On mac osx/linuxL /dev/tty.xxx, check /dev/ folder)
+  - Select the right speed...
+> (115200 for the stk500v2, 19200 for Arduinos based on the ATmega168, or 57600 for Arduinos based on the ATmega328p)
+  - Go to AVR -> Target hardware, click Load from MCU. If this works, uploading should work too.
+  - Build the project by clicking the hammer icon
+
+Now you should be good to go to edit code. I would recommend building and uploading the Blink project first to test your setup. After that you could rename and edit the Blink project to your liking. The next steps are for building the code and uploading it
+
+ - Go to the project properties of your project, go to AVR -> AVRDude and select the programmer configuration created before and click ok
+ - Click the hammer icon to build it
+ - Click on the AVR icon to upload the project to your arduino
+
+Credit for all of this tutorial goes to https://github.com/ricovangenugten
+
+## Using the Serial Library
+
+If you try to use the built in Serial object in Eclipse and you get an error saying that it hasn't been defined then you need to add the following snipped. For some reason this command is not executed where it should be in the "HardwareSerial.h".
+"""
+extern HardwareSerial Serial;
+"""
+
+You can either place it in the "arduino.h" file or at the top of your main.cpp. For the Ardiuno Mega which has three different Serial functions, use the same code except use "Serial1" instead, ie. 
+
+"""
+extern HardwareSerial Serial1;
+extern HardwareSerial Serial2;
+extern HardwareSerial Serial3;
+"""
