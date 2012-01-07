@@ -1,5 +1,4 @@
-#include <WProgram.h>
-#include <arduino.h>
+#include <Arduino.h>
 
 /*
   Blink
