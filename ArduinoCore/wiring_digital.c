@@ -24,6 +24,7 @@
   $Id: wiring.c 248 2007-02-03 15:36:30Z mellis $
 */
 
+#define ARDUINO_MAIN
 #include "wiring_private.h"
 #include "pins_arduino.h"
 
@@ -136,17 +137,16 @@ void digitalWrite(uint8_t pin, uint8_t val)
 
 	out = portOutputRegister(port);
 
+	uint8_t oldSREG = SREG;
+	cli();
+
 	if (val == LOW) {
-		uint8_t oldSREG = SREG;
-                cli();
 		*out &= ~bit;
-		SREG = oldSREG;
 	} else {
-		uint8_t oldSREG = SREG;
-                cli();
 		*out |= bit;
-		SREG = oldSREG;
 	}
+
+	SREG = oldSREG;
 }
 
 int digitalRead(uint8_t pin)
